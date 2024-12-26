@@ -18,21 +18,8 @@ function getComputerChoice()
     }
 }
 
-/**
- * Takes the user choice and returns it
- * @returns String value representing the player's choice
- */
-function getHumanChoice()
-{
-    let playerChoice = prompt("Choose rock, paper, or scissors:");
-    // Validate the user's input (case-insensitive)
-    if (playerChoice.toLowerCase() === "rock" || playerChoice.toLowerCase() === "paper" || playerChoice.toLowerCase() === "scissors") {
-        return playerChoice.toLowerCase();
-    }
-    else { // Invalid user input
-        return null;
-    }
-}
+const playerScoreDiv = document.querySelector("#playerScore");
+const computerScoreDiv = document.querySelector("#computerScore");
 
 /**
  * Global-scope variable to keep track of the human player's score
@@ -119,32 +106,56 @@ function playRound(humanChoice, computerChoice)
     else if (winner === "Tie") {
         message = `Tie! You both chose ${computerChoice}`;
     }
-    console.log(message);    
+    // Display scores in the UI
+    playerScoreDiv.textContent = humanScore;
+    computerScoreDiv.textContent = computerScore;
+    
+    return message;   
 }
+
+let result; // String variable that stores the result message
+const resultDiv = document.querySelector("#results"); // Target the div in the HTML to display the results
+
+const rockButton = document.querySelector("#rock");
+rockButton.addEventListener("click", () => {
+    let computerSelection = getComputerChoice(); // This needs to be inside the event listener to randomly generate a new value each round
+    result = playRound("rock", computerSelection);
+    resultDiv.textContent = result;
+    if (humanScore == 5 || computerScore == 5) {
+        announceWinner();
+    }
+})
+
+const paperButton = document.querySelector("#paper");
+paperButton.addEventListener("click", () => {
+    let computerSelection = getComputerChoice();
+    result = playRound("paper", computerSelection);
+    resultDiv.textContent = result;
+    if (humanScore == 5 || computerScore == 5) {
+        announceWinner();
+    }
+})
+
+const scissorsButton = document.querySelector("#scissors");
+scissorsButton.addEventListener("click", () => {
+    let computerSelection = getComputerChoice();
+    result = playRound("scissors", computerSelection);
+    resultDiv.textContent = result;
+    if (humanScore == 5 || computerScore == 5) {
+        announceWinner();
+    }
+})
 
 /**
- * Plays 5 rounds, keeps track of the scores, and declares a winner at the end
+ * Announce a winner of the game once one player reaches 5 points
  */
-function playGame()
+function announceWinner()
 {
-    // Loop through 5 rounds of the game
-    for (let i = 0; i < 5; i++) {
-        let humanSelection = getHumanChoice();
-        let computerSelection = getComputerChoice();
-        playRound(humanSelection, computerSelection);
+    if (humanScore == 5) {
+        resultDiv.textContent = "Player won the game!";
     }
-    // Compare the final humanScore and computerScore to determine the winner of the game
-    if (humanScore > computerScore) {
-        console.log("Player won the game!");       
+    else if (computerScore == 5) {
+        resultDiv.textContent = "Computer won the game!";
     }
-    else if (humanScore < computerScore) {
-        console.log("Computer won the game!");
-    }
-    else if (humanScore == computerScore) {
-        console.log("Tie!");
-    }
-    console.log(`Player Score: ${humanScore}`);
-    console.log(`Computer Score: ${computerScore}`);
 }
-
 
