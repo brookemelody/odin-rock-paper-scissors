@@ -1,0 +1,15 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.scores-container {
+    display: flex;
+    gap: 10px;
+}
+
+.buttons-container {
+    display: flex;
+    gap: 5px;
+}

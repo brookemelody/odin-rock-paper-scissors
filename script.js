@@ -109,7 +109,7 @@ function playRound(humanChoice, computerChoice)
     // Display scores in the UI
     playerScoreDiv.textContent = humanScore;
     computerScoreDiv.textContent = computerScore;
-    
+
     return message;   
 }
 
@@ -158,4 +158,3 @@ function announceWinner()
         resultDiv.textContent = "Computer won the game!";
     }
 }
-
